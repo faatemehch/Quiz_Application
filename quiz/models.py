@@ -10,11 +10,11 @@ choices = (
 
 class Quiz( models.Model ):
     name = models.CharField( max_length=100 )
-    difficulty = models.CharField( choices=choices )
+    difficulty = models.CharField( choices=choices, max_length=100 )
     required_time = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return f'{self.name}-{self.difficulty}'
 
 
 class Question( models.Model ):

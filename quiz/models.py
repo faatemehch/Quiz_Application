@@ -11,6 +11,7 @@ choices = (
 class Quiz( models.Model ):
     name = models.CharField( max_length=100 )
     difficulty = models.CharField( choices=choices, max_length=100 )
+    min_score = models.IntegerField(default=0, help_text='min score you need to pass the quiz.')
     required_time = models.IntegerField()
 
     def __str__(self):

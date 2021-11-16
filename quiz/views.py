@@ -10,6 +10,11 @@ class QuizListView( ListView ):
 
 def quizView(request, *args, **kwargs):
     quiz_id = kwargs['quiz_id']
-    quiz = Quiz.objects.filter( id=quiz_id )
-    context = {'quiz': quiz}
+    quiz = Quiz.objects.filter( id=quiz_id ).first()
+    questions = quiz.question_set.all()
+    context = {'quiz': quiz, 'questions': questions}
     return render( request, 'quiz/quiz-page.html', context )
+
+
+def checkingView(request, *args, **kwargs):
+    return render( request, 'quiz/checking.html', {} )

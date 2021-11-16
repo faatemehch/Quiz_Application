@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'shared/_MainLayout.html' %}
+{% block title %}
+    Quiz
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2 class="text-center text-success">Answer The Questions Bellow ...</h2>
+        <h4 class="text-center text-danger">{{ quiz.difficulty|title }} Quiz</h4>
+        <p class="text-center">Time Remaining: 02:35 <i class="fa fa-clock-o"></i></p>
+        <hr>
+    </div>
+    <div class="container mt-4 mb-5">
+        <a href="{% url 'quiz:home-view' %}" class="btn btn-danger">Go Back</a>
+    </div>
+    <div class="container bg-dark p-4 mb-5" id="questions-div">
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <!-- q1 -->
+                <div class="p-3 m-2 bg-light question">
+                    <div>
+                        <p>{{ question.question_text }}</p>
+                    </div>
+                    <div class="p-5">
+                        {% for ans in question.answer_set.all %}
+                            <div class="d-block">
+                                <input type="radio" class="mt-2" name="{{ ans.question.question_text }}"
+                                       value="{{ ans.answer_text }}">
+                                <label for="{{ ans.question.question_text }}">{{ ans.answer_text }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <a href="{% url 'quiz:quiz-check' 'ok' %}" class="btn btn-block btn-success">check</a>
+        </form>
+    </div>
+{% endblock %}

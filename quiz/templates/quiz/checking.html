@@ -1,0 +1,37 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block title %}
+    Checking
+{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="alert alert-primary text-center shadow text-dark" role="alert">
+            <h4>
+                Congratulations!<span>&#128512;</span>
+                <br><br>
+                Your Score: 60%, you passed the exam.
+            </h4>
+            <!-- <h4>
+                Opps!<span>&#128533;</span>
+                <br><br>
+                Your Score: 30%, you failed the exam.
+            </h4> -->
+        </div>
+    </div>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            A simple success alert—check it out!
+        </div>
+        <div class="alert alert-danger" role="alert">
+            A simple danger alert—check it out!
+        </div>
+        <div class="alert alert-danger" role="alert">
+            A simple danger alert—check it out!
+        </div>
+        <div class="alert alert-success" role="alert">
+            A simple success alert—check it out!
+        </div>
+    </div>
+    <div class="container">
+        <a href="{% url 'quiz:home-view' %}" class="btn btn-block btn-warning">Start Again</a>
+    </div>
+{% endblock %}

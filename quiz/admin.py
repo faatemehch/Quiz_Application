@@ -8,6 +8,7 @@ class AnswerTabular( admin.TabularInline ):
 
 class QuestionAdmin( admin.ModelAdmin ):
     inlines = [AnswerTabular]
+    list_display = ['__str__', 'quiz']
 
 
 class AnswerAdmin( admin.ModelAdmin ):

@@ -1,0 +1,41 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block title %}
+    Home
+{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <hr class="mt-5">
+        {% if not request.user.is_authenticated %}
+            <a href="login.html" class="btn btn-info">Login</a>
+            <a href="register.html" class="btn btn-warning">Register</a>
+        {% else %}
+            <a href="main-page.html" class="btn btn-dark text-light">Logout <i class="fa fa-sign-out"></i></a>
+            <h6 id="user-name" class="mt-4">Hello {{ request.user.username }} <i class="fa fa-user text-info"></i></h6>
+        {% endif %}
+        <hr class="mt-5">
+    </div>
+    <div class="container">
+        <h2 class="text-center" id="welcome-title">Welcome To Quiz Application</h2>
+        <hr>
+        <hr>
+    </div>
+    <div class="container mt-5 text-center">
+        <h4 class="text-center">Please Select the Level Of Your Quiz...</h4>
+        <br>
+        <br>
+        {% for quiz in object_list %}
+            <a href="{% url 'quiz:quiz' quiz.id %}" class="text-center mt-5"><i
+                    class="glyphicon glyphicon-chevron-left"></i>{{ quiz.difficulty|upper }}<i
+                    class="glyphicon glyphicon-chevron-right"></i></a>
+            <br>
+            <br>
+            <br>
+        {% endfor %}
+
+    </div>
+    <div class="container fixed-bottom">
+        <hr class="mt-5">
+        <hr class="mt-5">
+    </div>
+{% endblock %}

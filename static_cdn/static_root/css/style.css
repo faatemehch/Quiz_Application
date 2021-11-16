@@ -1,0 +1,38 @@
+ ::selection {
+     background: yellowgreen;
+     color: violet;
+ }
+
+ #welcome-title {
+     color: tomato;
+     animation: Shadow 2s infinite;
+ }
+
+ @keyframes Shadow {
+     50% {
+         text-shadow: 0px 0px 20px red;
+     }
+ }
+
+ a {
+     text-decoration: none;
+ }
+
+ a:hover {
+     color: violet;
+ }
+ /*  */
+ #questions-div{
+     border-radius: 10px;
+ }
+ .question{
+      border-radius: 10px;
+ }
+ #user-name{
+     animation: Username 2s infinite;
+ }
+ @keyframes Username{
+     50%{
+         text-shadow: 0px 0px 30px blue;
+     }
+ }

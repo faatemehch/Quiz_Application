@@ -1,6 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Quiz
+from .models import Quiz, Question
 from django.views.generic import ListView
+import random
 
 
 class QuizListView( ListView ):
@@ -17,4 +19,14 @@ def quizView(request, *args, **kwargs):
 
 
 def checkingView(request, *args, **kwargs):
-    return render( request, 'quiz/checking.html', {} )
+    quiz: Quiz = Quiz.objects.filter( id=kwargs['quiz_id'] ).first()
+    # questions: Question = quiz.question_set.all()
+    questions: Question = Question.objects.filter( quiz_id=kwargs['quiz_id'] ).all()
+
+    number_of_correct_questions = 0
+    for num, question in enumerate( questions ):
+        real_answer = question.get_correct()
+        user_answer = request.GET.get( f'{question.question_text}' )
+        if real_answer == user_answer:
+            number_of_correct_questions += 1
+    return render( request, 'quiz/checking.html', {'score': number_of_correct_questions} )

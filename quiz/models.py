@@ -11,7 +11,7 @@ choices = (
 class Quiz( models.Model ):
     name = models.CharField( max_length=100 )
     difficulty = models.CharField( choices=choices, max_length=100 )
-    min_score = models.IntegerField(default=0, help_text='min score you need to pass the quiz.')
+    min_score = models.IntegerField( default=0, help_text='min score you need to pass the quiz.' )
     required_time = models.IntegerField()
 
     def __str__(self):
@@ -24,6 +24,11 @@ class Question( models.Model ):
 
     def __str__(self):
         return self.question_text
+
+    def get_correct(self):
+        for answer in self.answer_set.all():
+            if answer.is_correct:
+                return answer.answer_text
 
 
 class Answer( models.Model ):

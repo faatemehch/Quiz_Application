@@ -13,18 +13,18 @@
         <a href="{% url 'quiz:home-view' %}" class="btn btn-danger">Go Back</a>
     </div>
     <div class="container bg-dark p-4 mb-5" id="questions-div">
-        <form method="post">
-            {% csrf_token %}
+        <form method="get" id="quiz-form" action="{% url 'quiz:quiz-check' quiz.id %}">
+            {#            {% csrf_token %}#}
             {% for question in questions %}
                 <!-- q1 -->
                 <div class="p-3 m-2 bg-light question">
                     <div>
-                        <p>{{ question.question_text }}</p>
+                        <h5>{{ question.question_text }}</h5>
                     </div>
                     <div class="p-5">
                         {% for ans in question.answer_set.all %}
                             <div class="d-block">
-                                <input type="radio" class="mt-2" name="{{ ans.question.question_text }}"
+                                <input type="radio" class="mt-2 ans" name="{{ ans.question.question_text }}"
                                        value="{{ ans.answer_text }}">
                                 <label for="{{ ans.question.question_text }}">{{ ans.answer_text }}</label>
                             </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             {% endfor %}
-            <a href="" class="btn btn-block btn-success">check</a>
+            <button type="submit" class="btn btn-block btn-success">check</button>
         </form>
     </div>
 {% endblock %}

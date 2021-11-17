@@ -10,7 +10,8 @@
             <a href="{% url 'account_login' %}" class="btn btn-info">Login</a>
             <a href="{% url 'account_signup' %}" class="btn btn-warning">Register</a>
         {% else %}
-            <a href="{% url 'account_logout' %}" class="btn btn-dark text-light">Logout <i class="fa fa-sign-out"></i></a>
+            <a href="{% url 'account_logout' %}" class="btn btn-dark text-light">Logout <i
+                    class="fa fa-sign-out"></i></a>
             <h6 id="user-name" class="mt-4">Hello {{ request.user.username }} <i class="fa fa-user text-info"></i></h6>
         {% endif %}
         <hr class="mt-5">
@@ -25,7 +26,8 @@
         <br>
         <br>
         {% for quiz in object_list %}
-            <a href="{% url 'quiz:quiz' quiz.id %}" class="text-center mt-5"><i
+            <a href="{% url 'quiz:quiz' quiz.id %}" class="text-center mt-5"
+                    {% if not request.user.is_authenticated %} onclick="return false;" {% endif %}><i
                     class="glyphicon glyphicon-chevron-left"></i>{{ quiz.difficulty|upper }}<i
                     class="glyphicon glyphicon-chevron-right"></i></a>
             <br>
@@ -38,4 +40,5 @@
         <hr class="mt-5">
         <hr class="mt-5">
     </div>
+
 {% endblock %}

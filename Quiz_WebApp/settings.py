@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'quiz',
+    'widget_tweaks',
 
     'allauth',
     'allauth.account',

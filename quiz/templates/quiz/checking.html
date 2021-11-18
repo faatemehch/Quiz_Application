@@ -5,17 +5,17 @@
 {% block content %}
     <div class="container mt-5">
         <div class="alert alert-primary text-center shadow text-dark" role="alert">
-            {% if score > 4 %}
+            {% if score > 50 %}
                 <h4>
                     Congratulations!<span>&#128512;</span>
                     <br><br>
-                    Your Score: 60%, you passed the exam.
+                    Your Score: {{ score }}%, you passed the exam.
                 </h4>
             {% else %}
                 <h4>
                     Opps!<span>&#128533;</span>
                     <br><br>
-                    Your Score: 30%, you failed the exam.
+                    Your Score: {{ score }}%, you failed the exam.
                 </h4>
             {% endif %}
         </div>

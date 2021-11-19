@@ -31,16 +31,16 @@ def checkingView(request, *args, **kwargs):
         form_data.pop( 'csrfmiddlewaretoken' )
         number_of_correct_questions = 0
         results = {}
-
         for question in questions:
             real_answer = question.get_correct()
             user_answer = form_data.get( f'{question}' )  # key => question, value => user-answer
-            if real_answer == user_answer:
+            if user_answer is None:
+                results[f'{question}'] = [False, real_answer, user_answer]
+            elif real_answer == user_answer[0]:
                 number_of_correct_questions += 1
-                results[f'{question}'] = [True, real_answer]
+                results[f'{question}'] = [True, real_answer, *user_answer]
             else:
-                results[f'{question}'] = [False, real_answer]
-
+                results[f'{question}'] = [False, real_answer, *user_answer]
         score = (number_of_correct_questions / len( questions )) * 100
         Result.objects.create( quiz_id=kwargs['quiz_id'], owner=user, score=score )
         context = {'score': score, 'results': results}

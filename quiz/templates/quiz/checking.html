@@ -22,8 +22,19 @@
     </div>
     <div class="container">
         {% for result_key , result_value in results.items %}
-            <div class="alert {% if result_value.0 %} alert-success {% else %} alert-danger {% endif %}" role="alert">
-                {{ result_key }} : {{ result_value.1 }}
+            <div class="alert {% if result_value.0 is True %} alert-success {% else %} alert-danger {% endif %}"
+                 role="alert">
+
+                {% if result_value.1 == result_value.2 %}
+                    {{ result_key }} = {{ result_value.1 }}
+                {% else %}
+                    {{ result_key }} = {{ result_value.1 }}
+                    {% if  result_value.2 is None %}
+                        (your answer : you did'nt answer this question)
+                    {% else %}
+                        (your answer : {{ result_value.2 }})
+                    {% endif %}
+                {% endif %}
             </div>
         {% endfor %}
     </div>

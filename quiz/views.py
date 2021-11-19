@@ -31,10 +31,10 @@ def checkingView(request, *args, **kwargs):
         form_data.pop( 'csrfmiddlewaretoken' )
         number_of_correct_questions = 0
         results = {}
-        for key, value in form_data.items():  # key => question, value => user-answer
-            user_answer = value[0]
-            question: Question = Question.objects.get( question_text=f'{key}' )
+
+        for question in questions:
             real_answer = question.get_correct()
+            user_answer = form_data.get( f'{question}' )  # key => question, value => user-answer
             if real_answer == user_answer:
                 number_of_correct_questions += 1
                 results[f'{question}'] = [True, real_answer]
@@ -49,4 +49,5 @@ def checkingView(request, *args, **kwargs):
         else:
             context['passed'] = True
         return render( request, 'quiz/checking.html', context )
+
     return redirect( 'quiz:home-view' )

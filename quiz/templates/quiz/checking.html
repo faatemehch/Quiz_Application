@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container mt-5">
         <div class="alert alert-primary text-center shadow text-dark" role="alert">
-            {% if score > 50 %}
+            {% if passed is True %}
                 <h4>
                     Congratulations!<span>&#128512;</span>
                     <br><br>
@@ -21,18 +21,11 @@
         </div>
     </div>
     <div class="container">
-        <div class="alert alert-success" role="alert">
-            A simple success alert—check it out!
-        </div>
-        <div class="alert alert-danger" role="alert">
-            A simple danger alert—check it out!
-        </div>
-        <div class="alert alert-danger" role="alert">
-            A simple danger alert—check it out!
-        </div>
-        <div class="alert alert-success" role="alert">
-            A simple success alert—check it out!
-        </div>
+        {% for result_key , result_value in results.items %}
+            <div class="alert {% if result_value.0 %} alert-success {% else %} alert-danger {% endif %}" role="alert">
+                {{ result_key }} : {{ result_value.1 }}
+            </div>
+        {% endfor %}
     </div>
     <div class="container">
         <a href="{% url 'quiz:home-view' %}" class="btn btn-block btn-warning">Start Again</a>

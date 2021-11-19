@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+import random
 
 choices = (
     ('easy', 'EASY'),
@@ -11,8 +12,14 @@ choices = (
 class Quiz( models.Model ):
     name = models.CharField( max_length=100 )
     difficulty = models.CharField( choices=choices, max_length=100 )
+    number_of_questions = models.IntegerField( default=0, help_text='number of questions for quiz' )
     min_score = models.IntegerField( default=0, help_text='min score you need to pass the quiz.' )
     required_time = models.IntegerField()
+
+    def get_random_questions(self):
+        questions = [self.question_set.all()]
+        # questions = random.shuffle( questions )
+        return questions[:self.number_of_questions]
 
     def __str__(self):
         return f'{self.name}-{self.difficulty}'

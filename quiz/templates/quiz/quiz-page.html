@@ -17,7 +17,7 @@
     </div>
     <div class="container bg-dark p-4 mb-5" id="questions-div">
         {#        <form method="get" id="quiz-form" action="{% url 'quiz:quiz-check' quiz.id %}">#}
-        <form method="post" id="quiz-form" action="{% url 'quiz:quiz-check' quiz.id %}">
+        <form method="post" id="quiz-form" action="{% url 'quiz:quiz-check' quiz.id %}" novalidate>
             {% csrf_token %}
             {% for question in questions %}
                 <!-- q1 -->
@@ -36,46 +36,42 @@
                     </div>
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-block btn-success">check</button>
+            <button type="submit" class="btn btn-block btn-success" id="check-btn">check</button>
         </form>
     </div>
     <script>
-        const s =
-        {{ quiz.required_time }} *
-        1000;
+        const s = ({{ quiz.required_time }}) * 1000;
         let start = new Date().getTime();
         let end = start + s;
         const days = Math.floor(end / (1000 * 60 * 60 * 24));
         const hours = Math.floor((end % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((end % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((end % (1000 * 60)) / 1000);
-        console.log('time finishing', start, end)
         // Update the count down every 1 second
         const x = setInterval(function () {
             let now = new Date().getTime();
-            if (now < end) {
-                console.log('now', now)
-            } else if (now >= end) {
-                console.log('quit', now)
-            }
-
+            // if (now < end) {
+            //     console.log('now', now)
+            // } else if (now >= end) {
+            //     console.log('quit', now)
+            // }
             const distance = end - now;
-
             // Time calculations for days, hours, minutes and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            $("#minutes").html(minutes + "<span>Minutes</span>");
-            $("#seconds").html(seconds + "<span>Seconds</span>");
+            $("#minutes").html(minutes + "<span></span>");
+            $("#seconds").html(seconds + "<span></span>");
 
             if (distance < 0) {
                 clearInterval(x);
-                console.log(distance)
+                // console.log(distance)
                 $("#minutes").html('00' + "<span>Minutes</span>");
                 $("#seconds").html('00' + "<span>Seconds</span>");
-                //document.getElementById("countdown").innerHTML = "We are live";
+                alert('Time Is Over!')
+                document.getElementById("check-btn").click();
             }
         }, 1000);
     </script>

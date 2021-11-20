@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
+
+
 from .models import Quiz, Question, Result
 from django.views.generic import ListView
 
@@ -25,7 +25,6 @@ def checkingView(request, *args, **kwargs):
     if request.POST:
         quiz: Quiz = Quiz.objects.get( id=kwargs['quiz_id'] )
         questions = quiz.question_set.all()
-        # questions: Question = Question.objects.filter( quiz_id=kwargs['quiz_id'] ).all()
         user = request.user
         form_data = dict( request.POST )
         form_data.pop( 'csrfmiddlewaretoken' )
@@ -49,5 +48,4 @@ def checkingView(request, *args, **kwargs):
         else:
             context['passed'] = True
         return render( request, 'quiz/checking.html', context )
-
     return redirect( 'quiz:home-view' )

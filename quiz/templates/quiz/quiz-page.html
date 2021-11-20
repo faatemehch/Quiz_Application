@@ -6,7 +6,10 @@
     <div class="container">
         <h2 class="text-center text-success">Answer The Questions Bellow ...</h2>
         <h4 class="text-center text-danger">{{ quiz.difficulty|title }} Quiz</h4>
-        <p class="text-center">Time Remaining: 02:35 <i class="fa fa-clock-o"></i></p>
+        <h5 class="text-center text-info">Score To Pass: {{ quiz.min_score|title }}%</h5>
+        <p class="text-center">Time Remaining: <span id="minutes"></span>:<span id="seconds"></span> <i
+                class="fa fa-clock-o"></i></p>
+
         <hr>
     </div>
     <div class="container mt-4 mb-5">
@@ -36,4 +39,44 @@
             <button type="submit" class="btn btn-block btn-success">check</button>
         </form>
     </div>
+    <script>
+        const s =
+        {{ quiz.required_time }} *
+        1000;
+        let start = new Date().getTime();
+        let end = start + s;
+        const days = Math.floor(end / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((end % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((end % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((end % (1000 * 60)) / 1000);
+        console.log('time finishing', start, end)
+        // Update the count down every 1 second
+        const x = setInterval(function () {
+            let now = new Date().getTime();
+            if (now < end) {
+                console.log('now', now)
+            } else if (now >= end) {
+                console.log('quit', now)
+            }
+
+            const distance = end - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            $("#minutes").html(minutes + "<span>Minutes</span>");
+            $("#seconds").html(seconds + "<span>Seconds</span>");
+
+            if (distance < 0) {
+                clearInterval(x);
+                console.log(distance)
+                $("#minutes").html('00' + "<span>Minutes</span>");
+                $("#seconds").html('00' + "<span>Seconds</span>");
+                //document.getElementById("countdown").innerHTML = "We are live";
+            }
+        }, 1000);
+    </script>
 {% endblock %}
